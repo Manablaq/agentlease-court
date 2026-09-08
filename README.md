@@ -7,11 +7,23 @@ decision against the job's acceptance criteria. Approved work becomes payable to
 the provider; rejected, ambiguous, failed, cancelled, or expired work remains
 refundable to the client.
 
-This repository contains the Bradbury contract, an identical Studio copy, pure
-regression tests, deployment runbook, evidence specification, security model,
-and a planned frontend integration surface. It is not yet claimed to be
-deployed or tested on Bradbury. A deployment address and transaction hash will
-be added only after the exact source is deployed and independently verified.
+This repository contains a standalone Intelligent Contract, an identical Studio
+copy, pure regression tests, a deployment runbook, an evidence specification,
+and a security model. There is intentionally no frontend, application server,
+or UI dependency: custody, authorization, evidence binding, consensus review,
+finalization, and withdrawals are contract-level behavior. It is not yet
+claimed to be deployed or tested on Bradbury. A deployment address and
+transaction hash will be added only after the exact source is deployed and
+independently verified.
+
+## Contract-only architecture
+
+The contract is the application. It owns the job state machine and escrow,
+enforces publisher authority boundaries, performs the non-deterministic evidence
+review, requires independent validator agreement, and exposes read/write
+methods for any compatible client. Off-chain evidence publishers and the
+deployment/test tooling are integration boundaries, not trusted application
+logic and not required for the contract to preserve its safety properties.
 
 ## Why GenLayer is necessary
 
@@ -114,7 +126,8 @@ npm run verify
 
 This checks Python syntax, deployable source parity, URL authority regression
 cases, lifecycle surface, payable value custody, independent validator
-re-evaluation, and prompt-safety invariants.
+re-evaluation, and prompt-safety invariants. It does not substitute for a live
+GenLayer runtime or Bradbury lifecycle test.
 
 ## Deployment policy
 

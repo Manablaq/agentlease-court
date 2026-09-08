@@ -10,9 +10,12 @@ records and independently re-evaluate whether the delivery satisfies the
 criteria. A consensus-bound result can be challenged once, then finalized into
 a provider payout or client refund. The contract includes provenance checks,
 stale/failed evidence handling, expiry recovery, duplicate-withdrawal
-protection, and a frontend-ready lifecycle surface. The project is designed for
-real agentic commerce, where ordinary escrow cannot judge natural-language
-deliverables against live external evidence.
+protection, and a contract-only lifecycle surface. There is no frontend or
+application server in the architecture: any compatible client can call the
+contract, while the contract itself owns custody, review, finalization, and
+withdrawal. The project is designed for real agentic commerce, where ordinary
+escrow cannot judge natural-language deliverables against live external
+evidence.
 
 ## One-liner
 
@@ -31,5 +34,6 @@ changing the escrow outcome.
 
 ## Current status
 
-Backend contract implemented and locally verified. Bradbury deployment,
-frontend, and live smoke-test identifiers are intentionally pending.
+Contract implemented and locally verified. Bradbury deployment and live
+smoke-test identifiers are intentionally pending; no frontend is part of this
+submission.
