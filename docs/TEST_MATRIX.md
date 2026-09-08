@@ -10,7 +10,7 @@
 | Authorization | Owner, client, provider, and participant boundaries present | Passing by static invariant test |
 | Consensus | Leader plus independent validator re-evaluation | Passing by static invariant test |
 | Prompt safety | External record content explicitly treated as untrusted | Passing by static invariant test |
-| Local GenLayer runtime | Simulator deployment and transaction execution | Blocked: installed CLI could not write its protected global override file |
+| Local GenLayer runtime | Simulator deployment and transaction execution | Blocked: clean simulator startup failed in `database-migration` while connecting to Postgres; no contract transaction was executed |
 | Bradbury deployment | Exact source deployment and Explorer verification | Not started |
 | Bradbury lifecycle | Fund, deliver, review, challenge, finalize, payout, refund | Not started |
 
