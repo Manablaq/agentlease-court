@@ -703,7 +703,8 @@ class AgentLeaseCourt(gl.Contract):
             recovery_deadline = job.review_deadline
         if now < recovery_deadline:
             raise gl.vm.UserError("job has not expired")
-        if job.status in (STATUS_SETTLED, STATUS_PAYABLE_PROVIDER, STATUS_PAYABLE_CLIENT, STATUS_CANCELLED):
+        if job.status in (STATUS_REVIEWED, STATUS_SETTLED, STATUS_PAYABLE_PROVIDER,
+                          STATUS_PAYABLE_CLIENT, STATUS_CANCELLED):
             raise gl.vm.UserError("job cannot be recovered")
         job.status = STATUS_CANCELLED
         job.decision = DECISION_UNKNOWN
