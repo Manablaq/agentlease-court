@@ -24,13 +24,12 @@ Consensus-backed GEN escrow that independently decides whether an AI agent deliv
 ## Expected verification outcome
 
 Create a funded job, submit delivery and independent verification records from
-distinct registered HTTPS authorities, start and resolve review, and inspect a
-canonical approved/rejected/needs_review result with evidence hashes. Submit a
-third-source challenge and resolve again; after the time-gated challenge window
-closes, finalize and withdraw exactly one payout to the provider or refund to
-the client. Attempts using an unregistered publisher, unsafe URL, duplicate
-source group, unauthorized caller, expired job, or second withdrawal must fail
-without changing the escrow outcome.
+distinct registered HTTPS authorities, start and resolve consensus review, and
+inspect canonical result with evidence hashes. Submit a third-source
+challenge, resolve again, wait for the challenge deadline, then finalize and
+withdraw the provider payout or client refund. Invalid publishers, unsafe URLs,
+duplicate groups, unauthorized callers, expired jobs, and duplicate withdrawals
+must fail without changing escrow.
 
 ## Current status
 
