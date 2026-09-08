@@ -17,8 +17,9 @@ deployment at `0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` used placeholder
 authorities and is superseded. Live testing now covers funded escrow,
 provider-only delivery, authority-bound evidence retrieval, consensus review,
 third-source challenge, fresh post-challenge review, finalization, and provider
-withdrawal. The short-window Bradbury run completed the full approved path;
-the original long-window job remains an earlier review-state record.
+withdrawal. Short-window Bradbury runs now cover both full settlement outcomes:
+an approved provider payout and a rejected client refund. The original
+long-window job remains an earlier review-state record.
 
 ## Contract-only architecture
 

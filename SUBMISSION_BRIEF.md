@@ -36,10 +36,10 @@ without changing the escrow outcome.
 
 Contract implemented and locally verified. The current Bradbury deployment and
 live evidence lifecycle through post-challenge re-evaluation, finalization, and
-provider withdrawal are verified using commit-pinned public fixtures. A
-short-window fixture run demonstrates the complete approved settlement path;
-the original long-window job remains an earlier review-state record. No
-frontend is part of this submission.
+provider withdrawal are verified using commit-pinned public fixtures. Short-
+window fixture runs demonstrate both complete settlement outcomes: an approved
+provider payout and a rejected client refund. The original long-window job
+remains an earlier review-state record. No frontend is part of this submission.
 
 Bradbury contract: `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`
 

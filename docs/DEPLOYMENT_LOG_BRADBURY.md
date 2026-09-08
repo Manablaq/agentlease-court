@@ -1,8 +1,9 @@
 # Bradbury deployment log
 
-Status: current deployment is live and smoke-tested through finalization and
-provider withdrawal on a short-window approved job. The original long-window
-job remains in review state because its 24-hour challenge window is separate.
+Status: current deployment is live and smoke-tested through both settlement
+outcomes: short-window approved provider payout and rejected client refund. The
+original long-window job remains in review state because its 24-hour challenge
+window is separate.
 
 This file will contain only verified facts. It must not contain a guessed
 contract address, guessed transaction hash, or a deployment claim based solely
@@ -92,9 +93,8 @@ and challenge hashes match the pinned fixture hashes above.
 
 `can_withdraw(1, provider)` currently returns `false` and `is_final(1)` returns
 `false` because job `1` has its own long challenge deadline still open. The
-approved provider payout for job `2` is separately verified in the short-window
-settlement section below. A rejected/refund evidence-resolution case remains
-unexercised live; the deterministic cancel/refund path is recorded above.
+approved provider payout for job `2` and rejected client refund for job `3` are
+separately verified in the short-window sections below.
 
 The temporary provider account used for this live test is
 `0x49273c7c30815adb623fb631bdaab6e425f4a734`. The worker funded it with
@@ -144,3 +144,31 @@ Final read-back for `get_job(2)` returned `status: 8` (`SETTLED`),
 `can_withdraw(2, provider)` returned `false` after the one-time withdrawal.
 The deployed source SHA remains
 `f6bd86e5c670486c4ee44f87a99da49c07c210c8ea02e25e344f88e96d03d346`.
+
+## Short-window rejected/refund lifecycle
+
+A second short-window run used deliberately contradictory acceptance criteria
+to exercise the consensus-bound rejected outcome and client refund. The fresh
+records were published at fixture commit
+`7330f6ce3c660a7cfda9cef5afc2350c1a742668` with a validity window ending at
+`1788855300` (`2026-09-08 08:15:00 UTC`). The exact body hashes were
+`b06085b857681c085b986dbdc61e7b83bc9983d42a6e95be28f14164274cc624` for
+delivery and `865b87869bbb9109c1d08c655110cee3ef1a8add60010af9b482935dc7703c12`
+for verification.
+
+| Action | Transaction | Observed result |
+|---|---|---|
+| Register `delivery-rejected-2` publisher | `0x6c923139ac1a66c32627bfeb138dc6951f31d06b6e35fe987391a67814cabd77` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Register `verification-rejected-2` publisher | `0x2524ffc3629484d4cfca9dda5d39c5e4846f87cf4e8c312c63a88f53cf5aba02` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Create job `3` with `0.01 GEN` escrow | `0x217e6bd7f3580b3fde6d9960a9f1910e6602516a070a538f62da1e7d522c9eab` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Provider submits delivery + verification | `0x32f4351641a2842a43e4bbd15b6bc4005808503813e60d4e540fb9fe04e4fb74` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Start review | `0x1ab491d9871de54956863ceca3eebe53603ed7d3858a97422059141742b16567` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Resolve rejected evidence | `0x8a5d874ad33958b84018582f2b6abf0b4ce29233d7f3467aef17243756e6064d` | live read-back: `REVIEWED / REJECTED`, consensus-bound |
+| Finalize job `3` | `0x741e7352c371f3a10cd8dc13acfe01551e816ecbdd8c95cf441fc816067db9c0` | `ACCEPTED / FINISHED_WITH_RETURN`; refund selected |
+| Client withdraws refund | `0x21527fd17dda67417f2ca8a21c779f4411d26b1c4a8cee990a79bd5671fe5a11` | `ACCEPTED / FINISHED_WITH_RETURN`; `0.01 GEN` transfer |
+
+Final read-back for `get_job(3)` returned `status: 8` (`SETTLED`),
+`decision: 2` (`REJECTED`), `confidence: 9500`, `reason_code:
+criteria_not_satisfied`, `consensus_bound: true`, `resolution_count: 1`, and
+`withdrawn: true`. `is_final(3)` returned `true` and
+`can_withdraw(3, client)` returned `false` after the one-time refund.
