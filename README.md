@@ -16,8 +16,9 @@ deployment is `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`; the earlier
 deployment at `0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` used placeholder
 authorities and is superseded. Live testing now covers funded escrow,
 provider-only delivery, authority-bound evidence retrieval, consensus review,
-third-source challenge, and fresh post-challenge review. Finalization and
-withdrawal remain time-gated until the challenge window expires.
+third-source challenge, fresh post-challenge review, finalization, and provider
+withdrawal. The short-window Bradbury run completed the full approved path;
+the original long-window job remains an earlier review-state record.
 
 ## Contract-only architecture
 

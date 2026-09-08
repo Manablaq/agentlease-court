@@ -1,8 +1,8 @@
 # Bradbury deployment log
 
-Status: current deployment is live and smoke-tested through fresh
-post-challenge consensus re-evaluation. Finalization and withdrawal are still
-time-gated by the contract's 24-hour challenge window.
+Status: current deployment is live and smoke-tested through finalization and
+provider withdrawal on a short-window approved job. The original long-window
+job remains in review state because its 24-hour challenge window is separate.
 
 This file will contain only verified facts. It must not contain a guessed
 contract address, guessed transaction hash, or a deployment claim based solely
@@ -91,9 +91,10 @@ For the current deployment, `get_job(1)` returned `status: 4` (`REVIEWED`),
 and challenge hashes match the pinned fixture hashes above.
 
 `can_withdraw(1, provider)` currently returns `false` and `is_final(1)` returns
-`false` because the challenge deadline is still open. Approved provider payout
-and a separate rejected/refund evidence case require the time-gated follow-up
-run after that deadline.
+`false` because job `1` has its own long challenge deadline still open. The
+approved provider payout for job `2` is separately verified in the short-window
+settlement section below. A rejected/refund evidence-resolution case remains
+unexercised live; the deterministic cancel/refund path is recorded above.
 
 The temporary provider account used for this live test is
 `0x49273c7c30815adb623fb631bdaab6e425f4a734`. The worker funded it with
@@ -107,3 +108,39 @@ escrow entry, provider-only delivery, authority-bound evidence retrieval,
 independent consensus review, third-source challenge, and fresh post-challenge
 review. Bradbury source retrieval is not exposed by the current SDK; source
 parity is recorded from the exact deployment input and local manifest.
+
+## Short-window settled lifecycle
+
+To verify the time-gated settlement path without waiting a full 24 hours, a
+second set of public fixtures was published with an explicit validity window
+ending at `1788854100` (`2026-09-08 07:55:00 UTC`). The contract derives the
+challenge deadline from that registered validity bound; no contract source
+change or deadline bypass was used.
+
+- Fixture repository: <https://github.com/Manablaq/agentlease-court-fixtures>
+- Fixture commit: `e892328943bbfb7cd43b1e0194cc237a4a7f2899`
+- Contract: `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`
+- Client: `0x1f87Ae197af539253978d435ad45cCf28Fb95024`
+- Test provider: `0x49273c7c30815adb623fb631bdaab6e425f4a734`
+
+| Action | Transaction | Observed result |
+|---|---|---|
+| Register `delivery-short` publisher | `0x0139133893fe6ed035260e0264b904beb4f9ec0a7eef513137908cbee7749006` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Register `verification-short` publisher | `0x38bd0cf50d969422550371a7c114abecdaaa9fd8c65d86d61b4cb54124a62289` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Register `challenge-short` publisher | `0x6abdae7b6d0118d979a7d1b88d5aa33e8840cbf04d3afe1c33e63f0d800b02f8` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Create job `2` with `0.01 GEN` escrow | `0x3f4b332d219739552e6b5e071a746f3cdfd403ea08718a12b9cddc65f7e21ad4` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Provider submits delivery + verification | `0x5b2442e45ab2743f005a4887f819df0321b066a6004c666dbb54a72ba2be3d82` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Start initial review | `0x9851f4959d983a6ceaf538dedadd08916e7bd325a479e0120f793de02e2ff78c` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Initial resolve | `0x489c1e4240f166870e303721135ef0be0d6f7aaeedf719c778b2f496239bbd11` | `ACCEPTED / FINISHED_WITH_RETURN`; approved |
+| Submit challenge | `0x46475aeca471191c02db6aa6ea27b6c3693cd6b940b5dda7827cce0bdab3c4a2` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Start post-challenge review | `0xe76cd73f90fbd06c0454f2f660ed386750d0d8fa3418b94d6c3bf0090962d842` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Post-challenge resolve | `0x161c47ba35d64a3fc42d706ae603eec3a3ea21652ab4ccae8059b2579fdd4e6c` | `ACCEPTED / FINISHED_WITH_RETURN`; approved |
+| Finalize job `2` | `0x1a28e66da0e2b096e30ec3210dd16e234ae52593f335f55fd735dffbc6c4ba36` | `ACCEPTED / FINISHED_WITH_RETURN`; `AGREE` |
+| Provider withdraws payout | `0xbb402111d9c03bdae5e0c92dca9b49bbc8bacc077860b890f9fc59667e7ebbbb` | `ACCEPTED / FINISHED_WITH_RETURN`; `0.01 GEN` transfer |
+
+Final read-back for `get_job(2)` returned `status: 8` (`SETTLED`),
+`decision: 1` (`APPROVED`), `confidence: 9500`, `consensus_bound: true`,
+`resolution_count: 2`, and `withdrawn: true`. `is_final(2)` returned `true` and
+`can_withdraw(2, provider)` returned `false` after the one-time withdrawal.
+The deployed source SHA remains
+`f6bd86e5c670486c4ee44f87a99da49c07c210c8ea02e25e344f88e96d03d346`.

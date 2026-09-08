@@ -35,13 +35,14 @@ without changing the escrow outcome.
 ## Current status
 
 Contract implemented and locally verified. The current Bradbury deployment and
-live evidence lifecycle through post-challenge re-evaluation are verified using
-commit-pinned public fixtures. Finalization and withdrawal are time-gated by the
-contract's 24-hour challenge window and are documented as pending until that
-window expires. No frontend is part of this submission.
+live evidence lifecycle through post-challenge re-evaluation, finalization, and
+provider withdrawal are verified using commit-pinned public fixtures. A
+short-window fixture run demonstrates the complete approved settlement path;
+the original long-window job remains an earlier review-state record. No
+frontend is part of this submission.
 
 Bradbury contract: `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`
 
 Repository: <https://github.com/Manablaq/agentlease-court>
 
-Pinned evidence fixtures: <https://github.com/Manablaq/agentlease-court-fixtures/tree/857e2fa08a3ff4f18261369d927f9793d7bf8b04>
+Pinned evidence fixtures: <https://github.com/Manablaq/agentlease-court-fixtures/tree/e892328943bbfb7cd43b1e0194cc237a4a7f2899>
