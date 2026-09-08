@@ -34,6 +34,9 @@ changing the escrow outcome.
 
 ## Current status
 
-Contract implemented and locally verified. Bradbury deployment and live
-smoke-test identifiers are intentionally pending; no frontend is part of this
+Contract implemented and locally verified. Bradbury deployment and the
+deterministic escrow/refund smoke test are verified; the evidence-review smoke
+test remains pending immutable public fixtures. No frontend is part of this
 submission.
+
+Bradbury contract: `0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb`

@@ -11,10 +11,11 @@ This repository contains a standalone Intelligent Contract, an identical Studio
 copy, pure regression tests, a deployment runbook, an evidence specification,
 and a security model. There is intentionally no frontend, application server,
 or UI dependency: custody, authorization, evidence binding, consensus review,
-finalization, and withdrawals are contract-level behavior. It is not yet
-claimed to be deployed or tested on Bradbury. A deployment address and
-transaction hash will be added only after the exact source is deployed and
-independently verified.
+finalization, and withdrawals are contract-level behavior. It is deployed on
+Bradbury at
+`0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` and partially smoke-tested. The
+deterministic escrow/refund path is verified; the evidence-review path remains
+pending immutable public fixtures.
 
 ## Contract-only architecture
 
