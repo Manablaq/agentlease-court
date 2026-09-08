@@ -11,11 +11,13 @@ This repository contains a standalone Intelligent Contract, an identical Studio
 copy, pure regression tests, a deployment runbook, an evidence specification,
 and a security model. There is intentionally no frontend, application server,
 or UI dependency: custody, authorization, evidence binding, consensus review,
-finalization, and withdrawals are contract-level behavior. It is deployed on
-Bradbury at
-`0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` and partially smoke-tested. The
-deterministic escrow/refund path is verified; the evidence-review path remains
-pending immutable public fixtures.
+finalization, and withdrawals are contract-level behavior. The current Bradbury
+deployment is `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`; the earlier
+deployment at `0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` used placeholder
+authorities and is superseded. Live testing now covers funded escrow,
+provider-only delivery, authority-bound evidence retrieval, consensus review,
+third-source challenge, and fresh post-challenge review. Finalization and
+withdrawal remain time-gated until the challenge window expires.
 
 ## Contract-only architecture
 
@@ -127,8 +129,8 @@ npm run verify
 
 This checks Python syntax, deployable source parity, URL authority regression
 cases, lifecycle surface, payable value custody, independent validator
-re-evaluation, and prompt-safety invariants. It does not substitute for a live
-GenLayer runtime or Bradbury lifecycle test.
+re-evaluation, and prompt-safety invariants. Current Bradbury results are
+recorded in `docs/DEPLOYMENT_LOG_BRADBURY.md`.
 
 ## Deployment policy
 

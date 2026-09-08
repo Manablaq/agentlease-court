@@ -26,17 +26,22 @@ Consensus-backed GEN escrow that independently decides whether an AI agent deliv
 Create a funded job, submit delivery and independent verification records from
 distinct registered HTTPS authorities, start and resolve review, and inspect a
 canonical approved/rejected/needs_review result with evidence hashes. Submit a
-third-source challenge, resolve again, finalize after the challenge window, and
-withdraw exactly one payout to the provider or refund to the client. Attempts
-using an unregistered publisher, unsafe URL, duplicate source group,
-unauthorized caller, expired job, or second withdrawal must fail without
-changing the escrow outcome.
+third-source challenge and resolve again; after the time-gated challenge window
+closes, finalize and withdraw exactly one payout to the provider or refund to
+the client. Attempts using an unregistered publisher, unsafe URL, duplicate
+source group, unauthorized caller, expired job, or second withdrawal must fail
+without changing the escrow outcome.
 
 ## Current status
 
-Contract implemented and locally verified. Bradbury deployment and the
-deterministic escrow/refund smoke test are verified; the evidence-review smoke
-test remains pending immutable public fixtures. No frontend is part of this
-submission.
+Contract implemented and locally verified. The current Bradbury deployment and
+live evidence lifecycle through post-challenge re-evaluation are verified using
+commit-pinned public fixtures. Finalization and withdrawal are time-gated by the
+contract's 24-hour challenge window and are documented as pending until that
+window expires. No frontend is part of this submission.
 
-Bradbury contract: `0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb`
+Bradbury contract: `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`
+
+Repository: <https://github.com/Manablaq/agentlease-court>
+
+Pinned evidence fixtures: <https://github.com/Manablaq/agentlease-court-fixtures/tree/857e2fa08a3ff4f18261369d927f9793d7bf8b04>
