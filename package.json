@@ -1,0 +1,15 @@
+{
+  "name": "agentlease-court",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bradbury backend and verification tooling for AgentLease Court",
+  "type": "module",
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v",
+    "check:python": "PYTHONPYCACHEPREFIX=/private/tmp/agentlease-pycache python3 -m py_compile contracts/agentlease_court.py studio_bradbury/agentlease_court.py",
+    "check:parity": "cmp contracts/agentlease_court.py studio_bradbury/agentlease_court.py",
+    "source:manifest": "node scripts/source_manifest.mjs",
+    "deploy:bradbury": "genlayer deploy --rpc https://rpc-bradbury.genlayer.com --contract contracts/agentlease_court.py",
+    "verify": "npm run check:python && npm run check:parity && npm run source:manifest && npm test"
+  }
+}
