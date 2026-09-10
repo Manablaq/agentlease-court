@@ -1,13 +1,5 @@
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
-"""AgentLease Court: consensus-backed escrow for agent and API work.
-
-The contract holds GEN for a client-funded job, binds delivery evidence to
-registered publisher authorities, and asks GenLayer validators to independently
-re-evaluate whether the delivery satisfies the client's acceptance criteria.
-Only a canonical decision crosses the non-deterministic boundary. Settlement is
-deterministic and requires an explicit finalization step after the challenge
-window.
-"""
+"""AgentLease Court."""
 
 from genlayer import *
 
