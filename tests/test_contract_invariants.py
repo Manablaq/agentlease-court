@@ -55,6 +55,22 @@ class ContractInvariantTests(unittest.TestCase):
     def test_expiry_recovery_cannot_override_a_reviewed_verdict(self):
         self.assertIn("STATUS_REVIEWED, STATUS_SETTLED", SOURCE)
 
+    def test_challenge_can_only_be_submitted_once(self):
+        contract = next(node for node in TREE.body if isinstance(node, ast.ClassDef) and node.name == "AgentLeaseCourt")
+        methods = {node.name: node for node in contract.body if isinstance(node, ast.FunctionDef)}
+        challenge_source = ast.unparse(methods["submit_challenge"])
+        self.assertIn("job.challenge_uri !=", challenge_source)
+        self.assertIn("job can only be challenged once", challenge_source)
+
+    def test_expiry_recovery_uses_active_challenge_deadline(self):
+        contract = next(node for node in TREE.body if isinstance(node, ast.ClassDef) and node.name == "AgentLeaseCourt")
+        methods = {node.name: node for node in contract.body if isinstance(node, ast.FunctionDef)}
+        recovery_source = ast.unparse(methods["recover_expired"])
+        challenge_index = recovery_source.index("recovery_deadline = job.challenge_deadline")
+        review_index = recovery_source.index("recovery_deadline = job.review_deadline")
+        self.assertLess(challenge_index, review_index)
+        self.assertIn("if recovery_deadline == u256(0):", recovery_source)
+
     def test_no_host_clock_or_randomness_is_used(self):
         self.assertNotIn("time.time()", SOURCE)
         self.assertNotIn("random.", SOURCE)

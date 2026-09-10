@@ -640,6 +640,8 @@ class AgentLeaseCourt(gl.Contract):
             raise gl.vm.UserError("only a job participant can challenge")
         if job.status != STATUS_REVIEWED or not job.consensus_bound:
             raise gl.vm.UserError("only a consensus-bound review can be challenged")
+        if job.challenge_uri != "":
+            raise gl.vm.UserError("job can only be challenged once")
         now = self._now()
         if now >= job.challenge_deadline:
             raise gl.vm.UserError("challenge window is closed")
@@ -698,9 +700,11 @@ class AgentLeaseCourt(gl.Contract):
     def recover_expired(self, job_id: u256) -> None:
         job = self._get_job(job_id)
         now = self._now()
-        recovery_deadline = job.delivery_deadline
-        if job.review_deadline != u256(0):
+        recovery_deadline = job.challenge_deadline
+        if recovery_deadline == u256(0):
             recovery_deadline = job.review_deadline
+        if recovery_deadline == u256(0):
+            recovery_deadline = job.delivery_deadline
         if now < recovery_deadline:
             raise gl.vm.UserError("job has not expired")
         if job.status in (STATUS_REVIEWED, STATUS_SETTLED, STATUS_PAYABLE_PROVIDER,
