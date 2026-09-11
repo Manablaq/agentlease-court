@@ -9,13 +9,13 @@ HELPERS = {
     node.name: node
     for node in TREE.body
     if isinstance(node, ast.FunctionDef)
-    and node.name in {"_safe_https_parts", "_uri_matches_publisher"}
+    and node.name in {"_sp", "_um"}
 }
-MODULE = ast.Module(body=[HELPERS["_safe_https_parts"], HELPERS["_uri_matches_publisher"]], type_ignores=[])
+MODULE = ast.Module(body=[HELPERS["_sp"], HELPERS["_um"]], type_ignores=[])
 ast.fix_missing_locations(MODULE)
 NAMESPACE = {}
 exec(compile(MODULE, "<publisher-binding>", "exec"), NAMESPACE)
-uri_matches_publisher = NAMESPACE["_uri_matches_publisher"]
+uri_matches_publisher = NAMESPACE["_um"]
 
 
 class PublisherBindingTests(unittest.TestCase):
