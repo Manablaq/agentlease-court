@@ -1,9 +1,8 @@
 # Bradbury deployment log
 
-Status: current deployment is live and smoke-tested through both settlement
-outcomes: short-window approved provider payout and rejected client refund. The
-original long-window job remains in review state because its 24-hour challenge
-window is separate.
+Status: the current deployment is live and accepted with the exact submitted
+source. The lifecycle smoke records below belong to the superseded deployment;
+they remain audit evidence for the contract behavior and fixtures.
 
 This file will contain only verified facts. It must not contain a guessed
 contract address, guessed transaction hash, or a deployment claim based solely
@@ -13,14 +12,20 @@ on local compilation.
 
 - Contract: `AgentLeaseCourt`
 - Source file: `contracts/agentlease_court.py`
-- Source SHA-256: `f6bd86e5c670486c4ee44f87a99da49c07c210c8ea02e25e344f88e96d03d346`
-- Bradbury contract address: `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`
-- Deployment transaction: `0x34172ac2df22754fa028857f39b5ffcf809a59855b5d908fe30ff61f8e80103d`
+- Source SHA-256: `1dcd6759159ffe4b3dc10c2edcee4aaec24a512c3221bd88538aaf8066fac0d5`
+- Bradbury contract address: `0xcFab4e1d17BE2AD403C322f027FC09402F513180`
+- Deployment transaction: `0x84dd9c21629f3535240a9ff4e789ff428fe164767754e1bd49c3fdf8eff071fa`
 - Deployment execution: `FINISHED_WITH_RETURN`
-- Explorer: <https://explorer-bradbury.genlayer.com/address/0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299>
+- Explorer: <https://explorer-bradbury.genlayer.com/address/0xcFab4e1d17BE2AD403C322f027FC09402F513180>
 
-The source SHA is unchanged from the earlier deployment and remains
-`f6bd86e5c670486c4ee44f87a99da49c07c210c8ea02e25e344f88e96d03d346`.
+The accepted deployment payload contains the same 19,908-byte source as
+`contracts/agentlease_court.py`; its SHA-256 is
+`1dcd6759159ffe4b3dc10c2edcee4aaec24a512c3221bd88538aaf8066fac0d5`.
+
+The transaction reached `ACCEPTED / AGREE` with execution result
+`FINISHED_WITH_RETURN`. Bradbury's source endpoint is unavailable on the
+public testnet SDK, so source parity is verified from the exact accepted
+deployment payload and the local manifest.
 
 ## Pinned public evidence fixtures
 
@@ -37,7 +42,10 @@ The three authorities were registered under the pinned raw-commit path with
 distinct source groups: `provider-records`, `verification-records`, and
 `challenge-records`.
 
-## Current Bradbury transactions
+## Superseded deployment Bradbury lifecycle transactions
+
+The following lifecycle transactions were executed against the superseded
+deployment `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`.
 
 | Action | Transaction | Observed result |
 |---|---|---|
@@ -83,9 +91,9 @@ The deployment in that section used placeholder `example.com`, `example.org`,
 and `example.net` authorities and is retained for audit history only. It is not
 the current submission deployment.
 
-## Current live read-back
+## Superseded deployment live read-back
 
-For the current deployment, `get_job(1)` returned `status: 4` (`REVIEWED`),
+For the superseded deployment, `get_job(1)` returned `status: 4` (`REVIEWED`),
 `decision: 1` (`APPROVED`), `confidence: 9500`,
 `reason_code: criteria_satisfied`, `consensus_bound: true`,
 `resolution_count: 2`, and `evidence_revision: 2`. The delivery, verification,
@@ -103,13 +111,14 @@ The temporary provider account used for this live test is
 provider-only delivery call could be signed. Its keystore is outside this
 repository.
 
-The current deployment proves deployment, publisher registration, payable
-escrow entry, provider-only delivery, authority-bound evidence retrieval,
-independent consensus review, third-source challenge, and fresh post-challenge
-review. Bradbury source retrieval is not exposed by the current SDK; source
-parity is recorded from the exact deployment input and local manifest.
+That deployment proves publisher registration, payable escrow entry,
+provider-only delivery, authority-bound evidence retrieval, independent
+consensus review, third-source challenge, and fresh post-challenge review.
+Bradbury source retrieval is not exposed by the current SDK; source parity for
+the current deployment is recorded above from the exact deployment input and
+local manifest.
 
-## Short-window settled lifecycle
+## Superseded deployment short-window settled lifecycle
 
 To verify the time-gated settlement path without waiting a full 24 hours, a
 second set of public fixtures was published with an explicit validity window
@@ -145,7 +154,7 @@ Final read-back for `get_job(2)` returned `status: 8` (`SETTLED`),
 The deployed source SHA remains
 `f6bd86e5c670486c4ee44f87a99da49c07c210c8ea02e25e344f88e96d03d346`.
 
-## Short-window rejected/refund lifecycle
+## Superseded deployment short-window rejected/refund lifecycle
 
 A second short-window run used deliberately contradictory acceptance criteria
 to exercise the consensus-bound rejected outcome and client refund. The fresh

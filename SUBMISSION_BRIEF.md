@@ -33,14 +33,19 @@ must fail without changing escrow.
 
 ## Current status
 
-Contract implemented and locally verified. The current Bradbury deployment and
-live evidence lifecycle through post-challenge re-evaluation, finalization, and
-provider withdrawal are verified using commit-pinned public fixtures. Short-
-window fixture runs demonstrate both complete settlement outcomes: an approved
-provider payout and a rejected client refund. The original long-window job
-remains an earlier review-state record. No frontend is part of this submission.
+Contract implemented and locally verified. The current Bradbury deployment was
+accepted with the exact submitted source. The recorded live evidence lifecycle
+through post-challenge re-evaluation, finalization, and provider withdrawal was
+verified on the superseded deployment using commit-pinned public fixtures.
+Short-window fixture runs demonstrate both complete settlement outcomes: an
+approved provider payout and a rejected client refund. No frontend is part of
+this submission.
 
-Bradbury contract: `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`
+Bradbury contract: `0xcFab4e1d17BE2AD403C322f027FC09402F513180`
+
+Deployment transaction: `0x84dd9c21629f3535240a9ff4e789ff428fe164767754e1bd49c3fdf8eff071fa`
+
+Source SHA-256: `1dcd6759159ffe4b3dc10c2edcee4aaec24a512c3221bd88538aaf8066fac0d5`
 
 Repository: <https://github.com/Manablaq/agentlease-court>
 

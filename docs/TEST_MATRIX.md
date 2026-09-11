@@ -11,9 +11,9 @@
 | Consensus | Leader plus independent validator re-evaluation | Passing by static invariant test |
 | Prompt safety | External record content explicitly treated as untrusted | Passing by static invariant test |
 | Local GenLayer runtime | Simulator deployment and transaction execution | Blocked outside the contract: startup succeeds with CLI-compatible images, but the simulator faucet fails while recording GEN-sized balances and `eth_getBalance` returns a nonstandard numeric result; no contract transaction was executed |
-| Bradbury deployment | Exact source deployment and Explorer record | Passing: current deployment is `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`; see deployment log |
-| Bradbury deterministic lifecycle | Fund, authorization, cancel, exact refund, one-time settlement | Passing for job `1`; see deployment log |
-| Bradbury evidence lifecycle | Deliver, consensus review, challenge, fresh review, finalize, provider payout, rejected refund | Passing: approved/challenged/provider-payout path on job `2` and rejected/client-refund path on job `3`; see deployment log |
+| Bradbury deployment | Exact source deployment and Explorer record | Passing: current deployment is `0xcFab4e1d17BE2AD403C322f027FC09402F513180`; see deployment log |
+| Bradbury deterministic lifecycle | Fund, authorization, cancel, exact refund, one-time settlement | Passing on the superseded deployment; source-level invariants cover the current deployment |
+| Bradbury evidence lifecycle | Deliver, consensus review, challenge, fresh review, finalize, provider payout, rejected refund | Passing on the superseded deployment; the current deployment contains the matching fixed source and is accepted on Bradbury |
 
 The approved path's time-gated finalization and payout were verified after the
 short fixture's registered validity window expired. The deterministic cancel /

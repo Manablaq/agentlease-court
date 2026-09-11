@@ -12,14 +12,14 @@ copy, pure regression tests, a deployment runbook, an evidence specification,
 and a security model. There is intentionally no frontend, application server,
 or UI dependency: custody, authorization, evidence binding, consensus review,
 finalization, and withdrawals are contract-level behavior. The current Bradbury
-deployment is `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`; the earlier
-deployment at `0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` used placeholder
-authorities and is superseded. Live testing now covers funded escrow,
-provider-only delivery, authority-bound evidence retrieval, consensus review,
-third-source challenge, fresh post-challenge review, finalization, and provider
-withdrawal. Short-window Bradbury runs now cover both full settlement outcomes:
-an approved provider payout and a rejected client refund. The original
-long-window job remains an earlier review-state record.
+deployment is `0xcFab4e1d17BE2AD403C322f027FC09402F513180`; the previous
+deployment at `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299` used the pre-fix
+source and is superseded. The earlier deployment at
+`0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` used placeholder authorities and
+is also superseded. The repository includes recorded Bradbury lifecycle
+evidence for funded escrow, provider-only delivery, authority-bound evidence
+retrieval, consensus review, third-source challenge, fresh post-challenge
+review, finalization, provider withdrawal, and rejected client refund.
 
 ## Contract-only architecture
 
