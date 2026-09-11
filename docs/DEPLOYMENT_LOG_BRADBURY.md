@@ -1,8 +1,9 @@
 # Bradbury deployment log
 
 Status: the current deployment is live and accepted with the exact submitted
-source. The lifecycle smoke records below belong to the superseded deployment;
-they remain audit evidence for the contract behavior and fixtures.
+source. The current deployment has completed the approved, challenged,
+finalized, provider-payout, active-deadline-recovery, client-refund, and
+duplicate-challenge checks on Bradbury.
 
 This file will contain only verified facts. It must not contain a guessed
 contract address, guessed transaction hash, or a deployment claim based solely
@@ -12,20 +13,90 @@ on local compilation.
 
 - Contract: `AgentLeaseCourt`
 - Source file: `contracts/agentlease_court.py`
-- Source SHA-256: `1dcd6759159ffe4b3dc10c2edcee4aaec24a512c3221bd88538aaf8066fac0d5`
-- Bradbury contract address: `0xcFab4e1d17BE2AD403C322f027FC09402F513180`
-- Deployment transaction: `0x84dd9c21629f3535240a9ff4e789ff428fe164767754e1bd49c3fdf8eff071fa`
+- Source SHA-256: `96167564487c69dea6c97533b6c7842cdfdf178732f118c11a495403fc18d588`
+- Bradbury contract address: `0x31F0bF694055e2b63ACEF4B010F7F7d7488AEee0`
+- Deployment transaction: `0xe13a116066ec352295a529b56cb163b90d45a0566b5c6de8969f694de2a97130`
 - Deployment execution: `FINISHED_WITH_RETURN`
-- Explorer: <https://explorer-bradbury.genlayer.com/address/0xcFab4e1d17BE2AD403C322f027FC09402F513180>
+- Explorer: <https://explorer-bradbury.genlayer.com/address/0x31F0bF694055e2b63ACEF4B010F7F7d7488AEee0>
 
-The accepted deployment payload contains the same 19,908-byte source as
+The accepted deployment payload contains the same 20,213-byte source as
 `contracts/agentlease_court.py`; its SHA-256 is
-`1dcd6759159ffe4b3dc10c2edcee4aaec24a512c3221bd88538aaf8066fac0d5`.
+`96167564487c69dea6c97533b6c7842cdfdf178732f118c11a495403fc18d588`.
 
 The transaction reached `ACCEPTED / AGREE` with execution result
-`FINISHED_WITH_RETURN`. Bradbury's source endpoint is unavailable on the
-public testnet SDK, so source parity is verified from the exact accepted
-deployment payload and the local manifest.
+`FINISHED_WITH_RETURN`. The deployed source was read back from Bradbury with
+the SDK and matched the local source hash. It contains the documented direct
+web and prompt APIs and no legacy nondeterministic aliases.
+
+## Current deployment Bradbury lifecycle
+
+The live run used fixture branch `live4-smoke-20260911`, commit
+`f3f8e4f`, from the public fixture repository. The delivery and verification
+body hashes were `3d4ef52b06660620f04246b006e96344d72e612e5c02f10bcb7ae99fd0eb686f`
+and `862e7669d96af38e5ebedc11f52c2937fbfad0b71b660da1bbb3df5c84fbc3cd`.
+The final short challenge body hash was
+`2a7610b76daf2e4f6d215503b725ad80b2939da52d03b41e0f04e35b274d6b55`.
+
+| Action | Transaction | Observed result |
+|---|---|---|
+| Register delivery publisher | `0xbc06713a61cae4831926cbf99e758ee776e34976d134df9324fabd1c06ec1e20` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Register verification publisher | `0xb5491c814968aabf5b63f3df7b875cdbe220db5bfb67e0d473b51ba5adcfd771` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Create job `1` with `0.001 GEN` escrow | `0xfcaa62f030a2ffee3b4f6725e10a17307a331abccc0cc313ad75d6e69cc5636e` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Provider submits delivery + verification | `0x1470499a6f7c1bd99513bf55f3da9dd733b2c909f45952854788d762ea0a738a` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Start initial review | `0x8b4148f6aceb314773fccf5b31f06cb6d248d38eb989d5587593bed7979feb78` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Initial resolve | `0x1f36f2e1c27929600974eff53b9ff47223134c0a7079651434c3c8bc8672273c` | `ACCEPTED / FINISHED_WITH_RETURN`; 5/5 validators `AGREE`; approved |
+| Register challenge publisher | `0xc7de76b068f2c154f091c89099cd9dd322b0576e89354c693c91f77b82f17849` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Submit third-source challenge | `0x1fc30a5c93ea192951245ac093dc6c39f6564850f0504092e9434c7cc9ab4fb7` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Start post-challenge review | `0x8ea108ee8eee985c8ff3e5af2ff944d12b234a90d20a5fbb37b64a908197fbd2` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Post-challenge resolve | `0x609d593155d49649091c02a21096bb1aaa0a50a1accfca4160d2eca4f2e22bc4` | `ACCEPTED / FINISHED_WITH_RETURN`; 5/5 validators `AGREE`; approved |
+| Duplicate challenge attempt | `0xdd3832006cc1c47232a82b7608c35d3c610244f0a1cc63f2b13824ebf243223a` | `FINISHED_WITH_ERROR`; rejected |
+| Finalize job `1` after active deadline | `0x18b6b8687f8ac9562d7eaf61723d8d9e5c307298d9db8a2c0a09d8539ad1e5b6` | `ACCEPTED / FINISHED_WITH_RETURN`; provider payout status |
+| Provider withdraws payout | `0xb1998fd54f1eca3e5030c3fa49246e60cd47335a62e6c38fe62922e7d475d682` | `ACCEPTED / FINISHED_WITH_RETURN` |
+
+Final read-back for job `1` returned `status: 8`, `decision: 1`,
+`confidence: 9500`, `reason_code: criteria_satisfied`, `resolution_count: 2`,
+`evidence_revision: 2`, `consensus_bound: true`, and `withdrawn: true`.
+`can_withdraw(1, provider)` returned `false` and `is_final(1)` returned `true`.
+This run completed the initial and post-challenge evaluations with independent
+leader re-evaluation and unanimous validator agreement.
+
+The reusable smoke command defaults to the refreshed fixture branch
+`live6-smoke-20260911` at commit
+`3a717cd9e047e2deb80cf43bd2990ee166224975`. Its branch-matched fixture body
+hashes are `b4363b01cc2086d6608b3743cd9d16fab30dff040e2579354dcd4a34a61dea80`
+for delivery, `2c4b373e30f170a04d8fe4c58eef8083d7e04a426c8091571b2dd71ba4ce9728`
+for verification, and
+`d94d4d23ae5f600e4563fcb55b53b5694b04b37dbe5b7fd4cf639339ee38aaa3` for the
+challenge. They are separate from the already completed live job records
+above.
+
+## Current deployment active-deadline recovery
+
+Job `2` on the same final deployment verified the recovery rule after a
+challenge was active. The challenge submission used the registered short
+challenge fixture with a shorter submitted validity bound to create a controlled
+deadline. The contract rejected recovery before that deadline, then refunded
+after it expired.
+
+| Action | Transaction | Observed result |
+|---|---|---|
+| Create job `2` with `0.001 GEN` escrow | `0xf0e83b52ea1e7b94a176af62cf7d97d1bb2ec5cb9e28728ecfd90ab96d4b0b08` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Provider submits delivery + verification | `0xea2e917c3c7e6c87039842b6903f7cb4260f625d1dd2ee1e1f234dff88c05629` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Start review | `0x61d451cec3a7c25e25c05c83beecd182c08b7a2491ed0834d31c6d36ab935bf2` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Resolve review | `0x0c5491fc919e6caf95b81d068dafcd41c7023026bfad37f99d5206f758a2b101` | initial attempt was `NOT_VOTED`; job remained in review |
+| Resolve review retry | `0xfe444f437b7fcbabb79f60c8ecd98c5e64573d8681b7ab532dd94a53d8cdf282` | `ACCEPTED / FINISHED_WITH_RETURN`; approved |
+| Submit challenge | `0x65c3cb41c54781cc929561878bf604f74a1ec56b8d6b0abe6a4944e37c0fb4eb` | `ACCEPTED / FINISHED_WITH_RETURN` |
+| Early recovery attempt | `0x939ed6e370a7ce85497677fcc9b6a201521a0190e690d8dbbcbe36c03858c0c1` | `FINISHED_WITH_ERROR`; deadline still active |
+| Recover after active challenge deadline | `0x1c5145c27e4b3a7141dfed636427f716836cbcbcad99455b3e3b54393cf74f3a` | `ACCEPTED / FINISHED_WITH_RETURN`; `expired_refund` |
+| Client withdraws refund | `0x04b7d02ce488cdbf22e2f48353efca31a32572b9d494ce5a98da3d0a0f8ce438` | `ACCEPTED / FINISHED_WITH_RETURN` |
+
+Final read-back for job `2` returned `status: 8`, `reason_code: expired_refund`,
+and `withdrawn: true`. This confirms that recovery follows the active
+`challenge_deadline` and returns the escrow to the client.
+
+## Historical deployments and fixture runs
+
+The sections below belong to superseded deployments and remain audit history.
 
 ## Pinned public evidence fixtures
 

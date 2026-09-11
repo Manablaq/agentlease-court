@@ -36,17 +36,20 @@ must fail without changing escrow.
 Contract implemented and locally verified. The current Bradbury deployment was
 accepted with the exact submitted source. The recorded live evidence lifecycle
 through post-challenge re-evaluation, finalization, and provider withdrawal was
-verified on the superseded deployment using commit-pinned public fixtures.
-Short-window fixture runs demonstrate both complete settlement outcomes: an
-approved provider payout and a rejected client refund. No frontend is part of
-this submission.
+verified on that deployment. A live smoke run also verified funded escrow,
+provider delivery, independent consensus approval, one challenge, fresh
+post-challenge consensus, duplicate-challenge rejection, deadline-gated
+finalization and provider payout, active-deadline recovery, and client refund.
+No frontend is part of this submission.
 
-Bradbury contract: `0xcFab4e1d17BE2AD403C322f027FC09402F513180`
+Bradbury contract: `0x31F0bF694055e2b63ACEF4B010F7F7d7488AEee0`
 
-Deployment transaction: `0x84dd9c21629f3535240a9ff4e789ff428fe164767754e1bd49c3fdf8eff071fa`
+Deployment transaction: `0xe13a116066ec352295a529b56cb163b90d45a0566b5c6de8969f694de2a97130`
 
-Source SHA-256: `1dcd6759159ffe4b3dc10c2edcee4aaec24a512c3221bd88538aaf8066fac0d5`
+Source SHA-256: `96167564487c69dea6c97533b6c7842cdfdf178732f118c11a495403fc18d588`
 
 Repository: <https://github.com/Manablaq/agentlease-court>
 
-Pinned evidence fixtures: <https://github.com/Manablaq/agentlease-court-fixtures/tree/e892328943bbfb7cd43b1e0194cc237a4a7f2899>
+Pinned evidence fixtures: <https://github.com/Manablaq/agentlease-court-fixtures/tree/live6-smoke-20260911>
+
+Reusable smoke test: `npm run smoke:bradbury`

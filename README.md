@@ -12,14 +12,14 @@ copy, pure regression tests, a deployment runbook, an evidence specification,
 and a security model. There is intentionally no frontend, application server,
 or UI dependency: custody, authorization, evidence binding, consensus review,
 finalization, and withdrawals are contract-level behavior. The current Bradbury
-deployment is `0xcFab4e1d17BE2AD403C322f027FC09402F513180`; the previous
-deployment at `0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299` used the pre-fix
-source and is superseded. The earlier deployment at
-`0xebEf03d3074DE546Fd402f0A3AdD881fd5EEcaDb` used placeholder authorities and
-is also superseded. The repository includes recorded Bradbury lifecycle
-evidence for funded escrow, provider-only delivery, authority-bound evidence
-retrieval, consensus review, third-source challenge, fresh post-challenge
-review, finalization, provider withdrawal, and rejected client refund.
+deployment is `0x31F0bF694055e2b63ACEF4B010F7F7d7488AEee0`, deployed from the
+exact source recorded in `docs/DEPLOYMENT_LOG_BRADBURY.md`. Earlier deployments,
+including the original submission at
+`0x7DC2037751d2eea395A92fb7d9865AB1D9DcC299`, are superseded. The repository
+includes recorded Bradbury lifecycle evidence for funded escrow, provider-only
+delivery, authority-bound evidence retrieval, consensus review, a single
+third-source challenge, fresh post-challenge review, finalization, provider
+withdrawal, active-deadline recovery, and client refund.
 
 ## Contract-only architecture
 
@@ -127,12 +127,16 @@ cryptographic signature.
 
 ```bash
 npm run verify
+npm run smoke:bradbury
 ```
 
 This checks Python syntax, deployable source parity, URL authority regression
 cases, lifecycle surface, payable value custody, independent validator
 re-evaluation, and prompt-safety invariants. Current Bradbury results are
-recorded in `docs/DEPLOYMENT_LOG_BRADBURY.md`.
+recorded in `docs/DEPLOYMENT_LOG_BRADBURY.md`. The Bradbury smoke command uses
+the configured GenLayer CLI accounts and the pinned fixture branch defaults in
+the script; it creates a fresh funded job, exercises the challenge and
+deadline paths, and checks the final withdrawal state.
 
 ## Deployment policy
 
